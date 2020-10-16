@@ -4,11 +4,9 @@ const cors = require('cors')({ origin: true })
 const express = require('express')
 const { json } = require('body-parser');
 
-console.log('CONFIGURATION', process.env.HEROKU_API_TOKEN)
-
 // Heroku
 const Heroku = require('heroku-client')
-const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
+// const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
 // heroku.get('/apps/primo/config-vars').then(apps => {
 //   console.log(apps)
 // })
