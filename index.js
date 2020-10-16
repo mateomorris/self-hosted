@@ -4,6 +4,17 @@ const cors = require('cors')({ origin: true })
 const express = require('express')
 const { json } = require('body-parser');
 
+const sendmail = require('sendmail')();
+
+sendmail({
+    from: 'no-reply@yourdomain.com',
+    to: 'mateomorris@hey.com',
+    subject: 'test sendmail',
+    html: 'Mail of test sendmail ',
+  }, function(err, reply) {
+    console.log(err && err.stack);
+    console.dir(reply);
+});
 
 console.log('CONFIGURATION', process.env.HEROKU_API_TOKEN)
 
@@ -132,8 +143,8 @@ express()
   // })
 
 
-  .listen(3005, err => {
+  .listen(process.env.PORT || 3005, err => {
     if (err) throw err;
-    console.log(`> Running on localhost:3005`);
+    console.log(`> Running on ${process.env.PORT || 3005}`);
   });
 
