@@ -131,8 +131,8 @@ express()
   // })
 
 
-  .listen(443 || 3005, err => {
+  .listen(process.env.PORT || 3000, err => {
     if (err) throw err;
-    console.log(`> Running on ${443 || 3005}`);
+    console.log(`> Running on ${process.env.PORT || 3000}`);
   });
 
