@@ -38,7 +38,6 @@ export default [{
 		name: 'app',
 	},
 	plugins: [
-		del({ targets: buildDirectory+'build' }),
     svelte({ preprocess, customElement: true, include: /\.wc\.svelte$/ }),
 		svelte({
       customElement: false,
@@ -98,7 +97,7 @@ export default [{
 			// we'll extract any component CSS out into
 			// a separate file - better for performance
 			css: css => {
-				css.write(buildDirectory+'/build/bundle.css');
+				css.write(buildDirectory+'/preview/bundle.css');
 			},
 			preprocess,
 		}),

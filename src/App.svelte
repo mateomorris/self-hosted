@@ -6,7 +6,7 @@
 	import Authentication from './extensions/Modals/Authentication.svelte'
 	import Setup from './extensions/Modals/Setup/Setup.svelte'
 	import {handlebars,postCSS} from './extensions/processors'
-	import {user} from './stores'
+	import {user,server} from './stores'
 
 	registerProcessors({
 		html: async (raw, fields) => await handlebars(raw, fields),
@@ -50,12 +50,12 @@
 	async function saveData(data) {
 		saving = true
 		// $user.signedIn &&	await axios.post('http://localhost:3005/__fn/data', data)
-		await axios.post('http://localhost:3005/__fn/data', data)
+		await axios.post(`${$server}/__fn/data`, data)
 		saving = false
 	}
 
 	async function getData() {
-		const {data} = await axios.get('http://localhost:3005/__fn/data')
+		const {data} = await axios.get(`${$server}/__fn/data`)
 		return data
 	}
 

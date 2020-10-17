@@ -5,14 +5,15 @@
   import {TextField,PrimaryButton} from '@primo-app/ui'
   import {fade} from 'svelte/transition'
   import {user} from './Account.svelte'
+  import {server} from '../../../stores'
 
   async function connectDB() {
     error = false
     loading = true
-    const {data:res} = await axios.post('http://localhost:3005/__fn/setup/db', {uri})
-
+    const {data:res} = await axios.post(`${$server}/__fn/setup/db`, {uri})
+    console.log({res})
     if (res.success) {
-      await axios.post('http://localhost:3005/__fn/auth/create', $user)
+      await axios.post(`${$server}/__fn/auth/create`, $user)
       dispatch('click')
     } else {
       error = true

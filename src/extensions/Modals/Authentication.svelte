@@ -2,11 +2,11 @@
   import axios from 'axios'
   import {modal} from '@primo-app/primo'
   import {TextField,PrimaryButton} from '@primo-app/ui'
-  import {user} from '../../stores'
+  import {user,server} from '../../stores'
 
   async function submitForm(e) {
     loading = true
-    const {data} = await axios.post('http://localhost:3005/login', { email, password })
+    const {data} = await axios.post(`${$server}/login`, { email, password })
     loading = false
     if (data.success) {
       $user = { ...$user, signedIn: true }

@@ -3,11 +3,12 @@
   import { createEventDispatcher } from 'svelte'
   import axios from 'axios/dist/axios'
   import {site,modal} from '@primo-app/primo'
+  import {server} from '../../stores'
 
   let dispatch = createEventDispatcher();
 
   async function buildSite() {
-    axios.post('http://localhost:3005/__fn/build', $site)
+    axios.post(`${$server}/__fn/build`, $site)
     modal.hide()
   }
 

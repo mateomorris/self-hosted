@@ -1,4 +1,6 @@
 import axios from 'axios'
+import {get} from 'svelte/store'
+import {server} from '../stores'
 
 let Handlebars;
 export async function handlebars(code, data) {
@@ -19,7 +21,7 @@ export async function handlebars(code, data) {
 let cachedCSS = ''
 export async function postCSS(raw, options) {
   console.log({raw,options})
-  const {data} = await axios.post('http://localhost:3005/__fn/postcss', {raw,options})
+  const {data} = await axios.post(`${get(server)}/__fn/postcss`, {raw,options})
   if (data.error) {
     console.error(data.error)
     return cachedCSS

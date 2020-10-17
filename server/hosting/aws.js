@@ -2,27 +2,20 @@ const AWS = require('aws-sdk')
 const s3 = new AWS.S3();
 
 async function setupS3(args) {
-  await setCredentials(args)
-  const [ response ] = await Promise.all([ 
-    createBucket({ 
-      name: 'primo-private', 
-      region: args.region
-    }),
-    createBucket({ 
-      name: 'primo-public', 
-      region: args.region,
-      public: true
-    })
-  ])
+  await setCredentials()
+  const response = await createBucket({ 
+    name: 'primo-hosting', 
+    region: process.env.AWS_REGION,
+    public: true
+  })
   return response
 }
 
-async function setCredentials({ keyID, accessKey, region }) {
-  // TODO: Set credentials in environment variable
+async function setCredentials() {
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region
+    region: process.env.AWS_REGION
   })
 }
 

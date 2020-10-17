@@ -4,11 +4,13 @@
   import {fade} from 'svelte/transition'
   import axios from 'axios' 
   import {TextField,Select,PrimaryButton,Spinner} from '@primo-app/ui'
+  import {server} from '../../../stores'
 
   async function connectHost() {
     loading = true
     error = false
-    const {data} = await axios.post('http://localhost:3005/__fn/setup/hosting', s3Credentials)
+    const {data} = await axios.post(`${$server}/__fn/setup/hosting`, s3Credentials)
+    console.log(data)
     loading = false
     if (data.success) {
       dispatch('click')
@@ -66,7 +68,7 @@
     <section class="transition-opacity duration-1000" in:fade>
       <hr class="mt-8 mb-4 border-gray-100">
       <h3 class="text-sm font-semibold pt-2">2. Enter Access Key</h3>
-      <p class="text-xs text-gray-400 mb-3">You can create an Access Key from your <a href="https://console.aws.amazon.com/iam/home?#/security_credentials">Management Console</a>.</p>
+      <p class="text-xs text-gray-400 mb-3">You can create an Access Key from your <a href="https://console.aws.amazon.com/iam/home?#/security_credentials" class="text-blue-500 underline">Management Console</a>.</p>
       <form on:submit|preventDefault={connectHost}>
         <TextField label="Key ID" size="small" bind:value={keyID} placeholder="LKIAIOI4EH5KZDTDJH7N" variants="mb-4" />
         <TextField label="Access Key" size="small" bind:value={accessKey} placeholder="AOj0jxZYRaVNtUemRVO60UNY4xlpieVrDfyO+P+B" variants="mb-4" />
@@ -89,7 +91,7 @@
         />
         {#if error}
           <div class="text-sm text-gray-700 p-4 bg-yellow-300 mb-4">
-            Could not connect to AWS with provided Access Key. Follow these <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">instruction</a> to ensure you're providing the correct keys.
+            Could not connect to AWS with provided Access Key. Follow these <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html" class="underline">instructions</a> to ensure you're providing the correct keys.
           </div>
         {/if}
         <PrimaryButton type="submit" {disabled}>
